@@ -22,13 +22,28 @@
   font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
 }
 
-/* Custom hide scrollbars for smooth mobile touch carousels */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
+/* Touch & horizontal scrollable tracks */
+.scroll-touch-x {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  touch-action: pan-x;
 }
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+
+/* Discreet horizontal scrollbar for non-touch / desktop mice */
+.custom-scrollbar-x::-webkit-scrollbar {
+  height: 5px;
+}
+.custom-scrollbar-x::-webkit-scrollbar-track {
+  background: #ede6d6;
+  border-radius: 9999px;
+}
+.custom-scrollbar-x::-webkit-scrollbar-thumb {
+  background: #c4b59f;
+  border-radius: 9999px;
+}
+.custom-scrollbar-x::-webkit-scrollbar-thumb:hover {
+  background: #c25e3f;
 }
 
 /* Safe area padding for mobile notches and bottom bars */

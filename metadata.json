@@ -2,5 +2,7 @@
   "name": "La Cucina di Stare Bene",
   "description": "Il ricettario tradizionale con 200 ricette di casa, come le faceva la nonna. Facile da consultare e gestire su smartphone.",
   "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }

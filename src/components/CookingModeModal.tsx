@@ -46,7 +46,7 @@ export function CookingModeModal({
   const detectedMinutes = detectTime(currentStep);
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#f7f4ed] flex flex-col justify-between overflow-hidden">
+    <div className="fixed inset-0 z-50 bg-[#f7f4ed] flex flex-col justify-between overflow-hidden h-[100dvh]">
       {/* Top Header */}
       <div className="bg-[#fcfaf6] border-b border-[#ebdccb] px-4 py-3 flex items-center justify-between">
         <button

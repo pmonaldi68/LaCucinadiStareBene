@@ -123,8 +123,11 @@ export function RecipeDetailModal({
       <div 
         className="w-full max-w-2xl mx-auto bg-[#fcfaf6] sm:rounded-3xl rounded-t-3xl min-h-[85vh] sm:min-h-0 sm:max-h-[92vh] flex flex-col shadow-2xl border border-[#ebdccb] animate-in slide-in-from-bottom duration-200 overflow-hidden"
       >
+        {/* Mobile Grab Handle Bar */}
+        <div className="w-10 h-1 bg-[#d5cbb4] rounded-full mx-auto mt-2.5 mb-1 sm:hidden shrink-0" />
+
         {/* Sticky Header with Action Bar */}
-        <div className="sticky top-0 z-20 bg-[#fcfaf6]/95 backdrop-blur-md border-b border-[#e6decb] px-4 py-3 flex items-center justify-between">
+        <div className="sticky top-0 z-20 bg-[#fcfaf6]/95 backdrop-blur-md border-b border-[#e6decb] px-4 py-2.5 flex items-center justify-between">
           <button
             onClick={onClose}
             className="flex items-center gap-1.5 text-sm font-medium text-[#5c4a3b] hover:text-[#2c241d] active:scale-95 transition-transform min-h-[44px] px-2 -ml-2 rounded-xl"

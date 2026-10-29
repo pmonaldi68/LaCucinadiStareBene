@@ -59,7 +59,7 @@ export function RecipeCard({
             type="button"
             onClick={(e) => onToggleFavorite(e, recipe.id)}
             aria-label={isFavorite ? 'Rimuovi dai preferiti' : 'Aggiungi ai preferiti'}
-            className="p-2 -mr-1 -mt-1 text-[#8c7b6b] hover:text-[#c25e3f] active:scale-125 transition-transform"
+            className="min-w-[44px] min-h-[44px] -mr-2 -mt-2 flex items-center justify-center text-[#8c7b6b] hover:text-[#c25e3f] active:scale-125 transition-transform"
           >
             <Heart
               className={`w-5 h-5 transition-colors ${

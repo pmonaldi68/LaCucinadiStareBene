@@ -186,7 +186,9 @@ export default function App() {
         {activeTab === 'libro' && (
           <PdfReaderView
             sections={sections}
+            recipes={recipes}
             initialPage={pdfTargetPage}
+            onOpenRecipe={(r) => setSelectedRecipe(r)}
           />
         )}
       </main>

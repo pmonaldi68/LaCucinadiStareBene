@@ -1,5 +1,15 @@
-import { useState, useMemo } from 'react';
-import { Search, X, Sparkles, Filter, SlidersHorizontal, ChefHat } from 'lucide-react';
+import { useState, useMemo, useRef } from 'react';
+import {
+  Search,
+  X,
+  Sparkles,
+  Filter,
+  SlidersHorizontal,
+  ChefHat,
+  ChevronLeft,
+  ChevronRight,
+  LayoutGrid
+} from 'lucide-react';
 import { Recipe, Section } from '../types';
 import { RecipeCard } from './RecipeCard';
 
@@ -26,6 +36,14 @@ export function ExploreView({
   const [maxMinutes, setMaxMinutes] = useState<number | null>(null);
   const [selectedPantryItem, setSelectedPantryItem] = useState<string | null>(null);
   const [showFilters, setShowFilters] = useState(false);
+  const [showAllSectionsModal, setShowAllSectionsModal] = useState(false);
+
+  const sectionsScrollRef = useRef<HTMLDivElement>(null);
+
+  // Drag-to-scroll tracking
+  const [isMouseDown, setIsMouseDown] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [initialScrollLeft, setInitialScrollLeft] = useState(0);
 
   // Common pantry ingredients for quick "Cosa c'è in frigo" filtering
   const pantryPills = [
@@ -49,7 +67,6 @@ export function ExploreView({
     const dayOfYear = Math.floor(
       (now.getTime() - new Date(now.getFullYear(), 0, 0).getTime()) / (1000 * 60 * 60 * 24)
     );
-    // Prefer recipes with photo for recipe of the day
     const photoRecipes = recipes.filter((r) => r.hasPhoto);
     return photoRecipes[dayOfYear % photoRecipes.length] || recipes[0];
   }, [recipes]);
@@ -114,8 +131,36 @@ export function ExploreView({
 
   const selectedSection = sections.find((s) => s.id === selectedSectionId);
 
+  // Horizontal scroll helpers
+  const handleScrollSections = (direction: 'left' | 'right') => {
+    if (sectionsScrollRef.current) {
+      const scrollAmount = direction === 'left' ? -260 : 260;
+      sectionsScrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  };
+
+  // Mouse drag handlers for desktop / trackpad compatibility
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!sectionsScrollRef.current) return;
+    setIsMouseDown(true);
+    setStartX(e.pageX - sectionsScrollRef.current.offsetLeft);
+    setInitialScrollLeft(sectionsScrollRef.current.scrollLeft);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isMouseDown || !sectionsScrollRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - sectionsScrollRef.current.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    sectionsScrollRef.current.scrollLeft = initialScrollLeft - walk;
+  };
+
+  const handleMouseUpOrLeave = () => {
+    setIsMouseDown(false);
+  };
+
   return (
-    <div className="space-y-5 pb-24 max-w-4xl mx-auto px-4 pt-3">
+    <div className="space-y-4 pb-24 max-w-4xl mx-auto px-3 sm:px-4 pt-2">
       {/* Search Input Bar */}
       <div className="relative">
         <div className="relative flex items-center">
@@ -249,17 +294,55 @@ export function ExploreView({
       )}
 
       {/* Horizontal Category Scroller for All 14 Book Sections */}
-      <div>
-        <div className="flex items-center justify-between mb-2 px-0.5">
-          <span className="text-xs font-semibold text-[#5c4a3b] uppercase tracking-wider">
-            Sezioni del Ricettario
+      <div className="space-y-1.5">
+        <div className="flex items-center justify-between px-0.5">
+          <span className="text-xs font-semibold text-[#5c4a3b] uppercase tracking-wider flex items-center gap-1.5">
+            <span>Sezioni del Ricettario</span>
+            <span className="text-[10px] text-[#8c7b6b] font-normal font-sans">
+              (14 capitoli)
+            </span>
           </span>
-          <span className="text-xs text-[#8c7b6b]">
-            {sections.length} capitoli
-          </span>
+
+          <div className="flex items-center gap-1">
+            <button
+              onClick={() => setShowAllSectionsModal(true)}
+              className="text-[11px] font-medium text-[#c25e3f] hover:underline flex items-center gap-1 px-1.5 py-0.5 rounded"
+            >
+              <LayoutGrid className="w-3 h-3" />
+              <span>Vedi tutte</span>
+            </button>
+
+            {/* Scroll Navigation Chevrons */}
+            <div className="flex items-center gap-0.5 ml-1">
+              <button
+                onClick={() => handleScrollSections('left')}
+                className="w-7 h-7 rounded-lg bg-white border border-[#e6decb] text-[#5c4a3b] hover:bg-[#faf6ee] active:scale-95 flex items-center justify-center shadow-2xs"
+                title="Scorri a sinistra"
+                aria-label="Scorri sezioni a sinistra"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => handleScrollSections('right')}
+                className="w-7 h-7 rounded-lg bg-white border border-[#e6decb] text-[#5c4a3b] hover:bg-[#faf6ee] active:scale-95 flex items-center justify-center shadow-2xs"
+                title="Scorri a destra"
+                aria-label="Scorri sezioni a destra"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
         </div>
 
-        <div className="flex items-center gap-2 overflow-x-auto pb-2 -mx-4 px-4 no-scrollbar">
+        {/* Scrollable Track with touch & mouse drag support */}
+        <div
+          ref={sectionsScrollRef}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUpOrLeave}
+          onMouseLeave={handleMouseUpOrLeave}
+          className="scroll-touch-x custom-scrollbar-x flex items-center gap-2 pb-2.5 pt-0.5 select-none"
+        >
           <button
             onClick={() => setSelectedSectionId(null)}
             className={`px-3.5 py-2 rounded-2xl text-xs font-medium whitespace-nowrap shrink-0 border transition-all ${
@@ -268,7 +351,7 @@ export function ExploreView({
                 : 'bg-white text-[#5c4a3b] border-[#e6decb] hover:bg-[#faf6ee]'
             }`}
           >
-            Tutte le ricette ({recipes.length})
+            Tutte ({recipes.length})
           </button>
 
           {sections.map((sec) => {
@@ -287,7 +370,7 @@ export function ExploreView({
                   {sec.id.toString().padStart(2, '0')}
                 </span>
                 <span>{sec.name}</span>
-                <span className={`text-[10px] ml-0.5 opacity-70`}>
+                <span className="text-[10px] ml-0.5 opacity-70">
                   ({sec.count})
                 </span>
               </button>
@@ -295,6 +378,74 @@ export function ExploreView({
           })}
         </div>
       </div>
+
+      {/* Modal / Sheet for "Vedi tutte le 14 sezioni" */}
+      {showAllSectionsModal && (
+        <div className="fixed inset-0 z-50 bg-[#2c241d]/50 backdrop-blur-xs flex flex-col justify-end sm:justify-center p-0 sm:p-4">
+          <div className="bg-[#fcfaf6] w-full max-w-xl mx-auto rounded-t-3xl sm:rounded-3xl border border-[#ebdccb] shadow-2xl p-5 max-h-[85vh] flex flex-col animate-in slide-in-from-bottom duration-200">
+            <div className="flex items-center justify-between pb-3 border-b border-[#ebdccb]">
+              <div>
+                <h3 className="font-serif font-bold text-lg text-[#2c241d]">
+                  Tutti i 14 Capitoli del Ricettario
+                </h3>
+                <p className="text-xs text-[#786d5e]">
+                  Seleziona una sezione per vedere tutte le sue ricette
+                </p>
+              </div>
+              <button
+                onClick={() => setShowAllSectionsModal(false)}
+                className="w-8 h-8 rounded-full bg-[#f2ecdf] text-[#5c4a3b] flex items-center justify-center hover:bg-[#ebdccb]"
+                aria-label="Chiudi elenco sezioni"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="overflow-y-auto divide-y divide-[#f0ebd9] py-2 flex-1">
+              <button
+                onClick={() => {
+                  setSelectedSectionId(null);
+                  setShowAllSectionsModal(false);
+                }}
+                className={`w-full py-3 px-2 text-left flex items-center justify-between hover:bg-[#faf6ee] rounded-xl transition-colors ${
+                  selectedSectionId === null ? 'font-bold text-[#c25e3f]' : 'text-[#2c241d]'
+                }`}
+              >
+                <span className="text-sm font-semibold">Tutte le 200 ricette</span>
+                <span className="text-xs text-[#786d5e]">{recipes.length} piatti</span>
+              </button>
+
+              {sections.map((sec) => (
+                <button
+                  key={sec.id}
+                  onClick={() => {
+                    setSelectedSectionId(sec.id);
+                    setShowAllSectionsModal(false);
+                  }}
+                  className={`w-full py-3 px-2 text-left flex items-start justify-between hover:bg-[#faf6ee] rounded-xl transition-colors ${
+                    selectedSectionId === sec.id ? 'bg-[#faebe6] text-[#c25e3f]' : 'text-[#2c241d]'
+                  }`}
+                >
+                  <div className="pr-3">
+                    <div className="flex items-center gap-2">
+                      <span className="font-serif font-bold text-xs text-[#c25e3f]">
+                        {sec.id.toString().padStart(2, '0')}.
+                      </span>
+                      <span className="text-sm font-semibold">{sec.name}</span>
+                    </div>
+                    <p className="font-serif italic text-xs text-[#786d5e] mt-0.5 line-clamp-1">
+                      «{sec.quote}»
+                    </p>
+                  </div>
+                  <span className="text-xs font-mono font-medium text-[#8c7b6b] shrink-0 mt-0.5">
+                    {sec.count} ricette
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Section Quote / Context (when a section is active) */}
       {selectedSection && (
