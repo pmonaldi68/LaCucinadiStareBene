@@ -1,0 +1,114 @@
+[
+  {
+    "id": 1,
+    "page": 4,
+    "name": "Bevande e infusi del risveglio",
+    "quote": "Il primo calore della giornata deve arrivare da una tazza, non dal telefono.",
+    "chapter": "Capitolo 1 · Il risveglio",
+    "count": 8
+  },
+  {
+    "id": 2,
+    "page": 13,
+    "name": "Colazioni dolci",
+    "quote": "Una colazione fatta in casa la senti fino a mezzogiorno.",
+    "chapter": "Capitolo 2 · La colazione",
+    "count": 18
+  },
+  {
+    "id": 3,
+    "page": 32,
+    "name": "Colazioni salate",
+    "quote": "Un uovo e un pezzo di pane buono: non serve altro per cominciare bene.",
+    "chapter": "Capitolo 2 · La colazione",
+    "count": 14
+  },
+  {
+    "id": 4,
+    "page": 47,
+    "name": "Spuntini di metà mattina",
+    "quote": "Lo spuntino si porta da casa, così sai cosa mangi.",
+    "chapter": "Capitolo 3 · La mattina",
+    "count": 10
+  },
+  {
+    "id": 5,
+    "page": 58,
+    "name": "Primi piatti",
+    "quote": "La pasta si butta quando arrivano tutti a tavola, mai prima.",
+    "chapter": "Capitolo 4 · Il pranzo e il dopo pranzo",
+    "count": 26
+  },
+  {
+    "id": 6,
+    "page": 85,
+    "name": "Zuppe e minestre",
+    "quote": "Una minestra calda mette d’accordo tutta la famiglia.",
+    "chapter": "Capitolo 4 e capitolo 10 · Il pranzo e il dopo pranzo · Le stagioni",
+    "count": 18
+  },
+  {
+    "id": 7,
+    "page": 104,
+    "name": "Secondi di carne",
+    "quote": "La carne buona vuole tempo e fuoco basso.",
+    "chapter": "Capitolo 4 e capitolo 7 · Il pranzo e il dopo pranzo · La cena",
+    "count": 14
+  },
+  {
+    "id": 8,
+    "page": 119,
+    "name": "Secondi di pesce",
+    "quote": "Il pesce povero è il più saporito: basta saperlo cucinare.",
+    "chapter": "Capitolo 4 e capitolo 7 · Il pranzo e il dopo pranzo · La cena",
+    "count": 14
+  },
+  {
+    "id": 9,
+    "page": 134,
+    "name": "Uova e legumi",
+    "quote": "Con un pugno di legumi e due uova si sfama una tavolata.",
+    "chapter": "Capitolo 4 e capitolo 7 · Il pranzo e il dopo pranzo · La cena",
+    "count": 14
+  },
+  {
+    "id": 10,
+    "page": 149,
+    "name": "Contorni e verdure",
+    "quote": "Le verdure di stagione non hanno bisogno di trucchi.",
+    "chapter": "Capitolo 4 e capitolo 7 · Il pranzo e il dopo pranzo · La cena",
+    "count": 20
+  },
+  {
+    "id": 11,
+    "page": 170,
+    "name": "Merende del pomeriggio",
+    "quote": "La merenda è una pausa, non una corsa al dolce.",
+    "chapter": "Capitolo 5 · Il pomeriggio",
+    "count": 12
+  },
+  {
+    "id": 12,
+    "page": 183,
+    "name": "Cene leggere",
+    "quote": "La sera si mangia leggero, così la notte riposa anche la pancia.",
+    "chapter": "Capitolo 7 · La cena",
+    "count": 14
+  },
+  {
+    "id": 13,
+    "page": 198,
+    "name": "Tisane e bevande della sera",
+    "quote": "Una tazza calda è il modo più gentile per chiudere la giornata.",
+    "chapter": "Capitolo 8 e capitolo 9 · La sera · La notte",
+    "count": 8
+  },
+  {
+    "id": 14,
+    "page": 207,
+    "name": "Basi di casa e recuperi",
+    "quote": "In una cucina di casa non si butta niente.",
+    "chapter": "Capitolo 4 e capitolo 10 · Il pranzo e il dopo pranzo · Le stagioni",
+    "count": 10
+  }
+]
